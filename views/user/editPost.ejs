@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Caption - InstaKilogram</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CSS Variables (Konsisten) --- */
+        :root {
+            --bg-navy: #0a192f;
+            --card-navy: #112240;
+            --input-bg: #172a45;
+            --text-white: #e6f1ff;
+            --text-gray: #8892b0;
+            --btn-primary: #1d4ed8;
+            --btn-danger: #ef4444;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-navy);
+            color: var(--text-white);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* --- Container Kartu --- */
+        .edit-card {
+            background-color: var(--card-navy);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px -10px rgba(2, 12, 27, 0.7);
+            width: 100%;
+            max-width: 450px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            color: var(--text-white);
+        }
+
+        /* --- Image Preview --- */
+        .image-container {
+            width: 100%;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .post-preview {
+            width: 100%;
+            height: auto;
+            display: block;
+            max-height: 300px;
+            object-fit: cover;
+        }
+
+        /* --- Form Elements --- */
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-white);
+            font-family: inherit;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.3s ease;
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        textarea:focus {
+            border-color: var(--btn-primary);
+            box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.2);
+        }
+
+        /* --- Button Group --- */
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            border: none;
+            flex: 1; /* Membagi tombol sama rata */
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+        }
+
+        .btn-primary {
+            background-color: var(--btn-primary);
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-gray);
+            border: 1px solid var(--border-color);
+        }
+        .btn-secondary:hover {
+            border-color: var(--text-white);
+            color: var(--text-white);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="edit-card">
+        <h2>Edit Caption</h2>
+
+        <div class="image-container">
+            <img src="<%= post.posting %>" class="post-preview" alt="Post Preview">
+        </div>
+
+        <form action="/user/<%= userId %>/editpost/<%= post.id %>" method="post">
+            
+            <label>Caption</label>
+            <textarea name="caption" rows="3" required autofocus><%= post.caption %></textarea>
+            
+            <div class="btn-group">
+                <a href="/user/<%= userId %>" class="btn btn-secondary">Cancel</a>
+                
+                <button type="submit" class="btn btn-primary">Update Post</button>
+            </div>
+
+        </form>
+    </div>
+
+</body>
+</html>

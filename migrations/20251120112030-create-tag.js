@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      hastag_name: {
+      hastag_name: { // <--- PASTIKAN INI BENAR (Bukan 'name' atau 'hashtag_name')
         type: Sequelize.STRING
       },
       createdAt: {

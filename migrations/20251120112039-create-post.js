@@ -9,14 +9,24 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      posting: {
+      posting: { // <--- INI YANG PENTING (Harus sama dengan Model)
         type: Sequelize.STRING
       },
       caption: {
         type: Sequelize.STRING
       },
-      like: {
-        type: Sequelize.INTEGER
+      like: {    // <--- INI JUGA PENTING
+        type: Sequelize.INTEGER,
+        defaultValue: 0
+      },
+      UserProfileId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'UserProfiles',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       createdAt: {
         allowNull: false,

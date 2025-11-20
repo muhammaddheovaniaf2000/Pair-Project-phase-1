@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search - InstaKilogram</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- Variables --- */
+        :root {
+            --bg-navy: #0a192f;
+            --card-navy: #112240;
+            --input-bg: #172a45;
+            --text-white: #e6f1ff;
+            --text-gray: #8892b0;
+            --btn-primary: #1d4ed8;
+            --accent-cyan: #64ffda;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-navy);
+            color: var(--text-white);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Header & Search Box */
+        .header-row {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
+        }
+        .search-box { display: flex; gap: 10px; margin-bottom: 30px; }
+        
+        input {
+            flex: 1; padding: 12px 15px; background: var(--input-bg);
+            border: 1px solid var(--border-color); color: white; border-radius: 8px; outline: none;
+        }
+        input:focus { border-color: var(--btn-primary); }
+        
+        .btn-search {
+            padding: 0 25px; background: var(--btn-primary); color: white;
+            border: none; border-radius: 8px; cursor: pointer; font-weight: 500;
+        }
+
+        /* --- User Card Styles --- */
+        .user-card {
+            background: var(--card-navy);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s;
+        }
+        
+        .user-card:hover {
+            transform: translateX(5px);
+            border-color: rgba(100, 255, 218, 0.3);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Style untuk Foto Profil Asli */
+        .avatar-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent-cyan);
+        }
+
+        /* Style untuk Inisial (Fallback jika tidak ada foto) */
+        .avatar-initial {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1d4ed8, #64ffda);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #0a192f;
+            font-size: 1.1rem;
+        }
+
+        .user-name { font-weight: 500; font-size: 1rem; }
+
+        .btn-view {
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            padding: 6px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+        .btn-view:hover { background: rgba(100, 255, 218, 0.1); }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="header-row">
+            <h2>Find People</h2>
+            <a href="/user/home" style="color: var(--text-gray); text-decoration: none;">Cancel</a>
+        </div>
+
+        <form action="/user/<%= userId %>/search" method="get" class="search-box">
+            <input type="text" name="search" placeholder="Search name..." required autocomplete="off">
+            <button type="submit" class="btn-search">Search</button>
+        </form>
+
+        <div>
+            <% if(profiles && profiles.length > 0) { %>
+                <% profiles.forEach(p => { %>
+                    
+                    <% if (p.User.role !== 'admin' && p.UserId != userId) { %>
+                        <div class="user-card">
+                            <div class="user-info">
+                                
+                                <% if (p.profilePict) { %>
+                                    <img src="<%= p.profilePict %>" class="avatar-img" alt="<%= p.name %>">
+                                <% } else { %>
+                                    <div class="avatar-initial">
+                                        <%= p.name.charAt(0).toUpperCase() %>
+                                    </div>
+                                <% } %>
+                                <span class="user-name"><%= p.name %></span>
+                            </div>
+                            
+                            <a href="/user/<%= userId %>/search/<%= p.UserId %>" class="btn-view">View</a>
+                        </div>
+                    <% } %>
+
+                <% }) %>
+            <% } else { %>
+                 <% if (typeof profiles !== 'undefined') { %>
+                    <p style="text-align: center; color: var(--text-gray);">No users found.</p>
+                 <% } %>
+            <% } %>
+        </div>
+
+    </div>
+
+</body>
+</html>

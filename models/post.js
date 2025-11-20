@@ -1,23 +1,31 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Post extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      Post.belongsTo(models.UserProfile, { foreignKey: 'UserProfileId' })
+      Post.belongsToMany(models.Tag, { through: models.PostTag, foreignKey: 'PostId' })
+    }
+
+    // Req Aplikasi 3: Getter (Kita pakai buat preview caption, BUKAN time ago)
+    get captionSnippet() {
+      // Jika caption lebih dari 20 karakter, potong dan tambah '...'
+      if (this.caption && this.caption.length > 20) {
+          return this.caption.substring(0, 20) + '...';
+      }
+      return this.caption;
     }
   }
+  
   Post.init({
     posting: DataTypes.STRING,
-    caption: DataTypes.STRING,
-    like: DataTypes.INTEGER,
-    UserId: DataTypes.INTEGER
+    caption: { 
+      type: DataTypes.STRING, 
+      validate: { notEmpty: { msg: "Caption tidak boleh kosong" } } 
+    },
+    like: { type: DataTypes.INTEGER, defaultValue: 0 },
+    UserProfileId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Post',

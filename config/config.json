@@ -2,7 +2,7 @@
   "development": {
     "username": "postgres",
     "password": "postgres",
-    "database": "SocialMediaLite_v2",
+    "database": "InstaKilogram.v1",
     "host": "127.0.0.1",
     "dialect": "postgres"
   }
