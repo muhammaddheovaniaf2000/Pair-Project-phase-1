@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feed - InstaKilogram</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-navy: #0a192f; --card-navy: #112240; --text-white: #e6f1ff;
+            --text-gray: #8892b0; --accent-cyan: #64ffda; --btn-primary: #1d4ed8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif; background-color: var(--bg-navy);
+            color: var(--text-white); padding-top: 80px; min-height: 100vh;
+        }
+        nav {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background-color: rgba(10, 25, 47, 0.95); backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.1); padding: 15px 0; z-index: 1000;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .nav-content { width: 100%; max-width: 600px; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
+        .brand { font-weight: 700; font-size: 1.2rem; color: white; }
+        .brand span { color: var(--accent-cyan); }
+        .nav-links a { color: var(--text-gray); text-decoration: none; margin-left: 20px; transition: 0.3s; font-weight: 500; }
+        .nav-links a:hover { color: var(--accent-cyan); }
+        .feed-container { max-width: 600px; margin: 0 auto; padding: 0 15px; }
+        .post-card {
+            background-color: var(--card-navy); border-radius: 12px; margin-bottom: 30px;
+            border: 1px solid rgba(255,255,255,0.1); overflow: hidden;
+        }
+        .post-header { padding: 15px; display: flex; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .avatar-fallback {
+            width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #1d4ed8, #64ffda);
+            color: #0a192f; display: flex; justify-content: center; align-items: center; font-weight: 700; margin-right: 12px;
+        }
+        .avatar-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; margin-right: 12px; }
+        .post-image { width: 100%; display: block; min-height: 200px; object-fit: cover; }
+        .post-footer { padding: 15px; }
+        .hashtag { color: var(--accent-cyan); margin-right: 5px; text-decoration: none; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <div class="brand">Insta<span>Kilogram</span></div>
+            <div class="nav-links">
+                <a href="/user/<%= userId %>">Profile</a>
+                <a href="/user/<%= userId %>/search">Search</a>
+                <a href="/logout" style="color: #ef4444;">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="feed-container">
+        <% posts.forEach(post => { %>
+            <div class="post-card">
+                <div class="post-header">
+                    <% if(post.UserProfile && post.UserProfile.profilePict) { %>
+                        <img src="<%= post.UserProfile.profilePict %>" class="avatar-img">
+                    <% } else { %>
+                        <div class="avatar-fallback"><%= post.UserProfile ? post.UserProfile.name.charAt(0).toUpperCase() : '?' %></div>
+                    <% } %>
+                    <span style="font-weight: 600;"><%= post.UserProfile ? post.UserProfile.name : 'Unknown' %></span>
+                </div>
+                <img src="<%= post.posting %>" class="post-image">
+                <div class="post-footer">
+                    <div style="margin-bottom: 10px;">
+                        <a href="/user/<%= userId %>/like/<%= post.id %>" style="text-decoration:none; font-size:1.5rem; margin-right:10px;">
+                            <%= (typeof likedPosts !== 'undefined' && likedPosts.includes(post.id)) ? '❤️' : '🤍' %>
+                        </a>
+                        <span style="font-weight:600;"><%= post.like %> Likes</span>
+                    </div>
+                    <p style="margin-bottom:5px; line-height:1.5;">
+                        <strong><%= post.UserProfile ? post.UserProfile.name : '' %></strong> <%= post.caption %>
+                    </p>
+                        <% if(post.Tags && post.Tags.length > 0) { %>
+                        <div style="margin-bottom:8px;">
+                            <% post.Tags.forEach(tag => { %> <span class="hashtag"><%= tag.hastag_name %></span> <% }) %>
+                        </div>
+                    <% } %>
+                    <small style="color:var(--text-gray); font-size:0.7rem; text-transform:uppercase;"><%= formatTime(post.createdAt) %></small>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+</body>
+</html>

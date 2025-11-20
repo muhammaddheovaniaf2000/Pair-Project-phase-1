@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - InstaKilogram</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- Menggunakan CSS Variables yang sama agar konsisten --- */
+        :root {
+            --bg-navy: #0a192f;
+            --card-navy: #112240;
+            --input-bg: #172a45;      /* Warna background input */
+            --text-white: #e6f1ff;
+            --text-gray: #8892b0;
+            --btn-primary: #1d4ed8;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --error-red: #ef4444;     /* Warna error modern */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-navy);
+            color: var(--text-white);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-card {
+            background-color: var(--card-navy);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px -10px rgba(2, 12, 27, 0.7);
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            color: var(--text-white);
+        }
+
+        /* --- Styling Form Input --- */
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-white);
+            font-family: inherit;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            border-color: var(--btn-primary);
+            box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.2);
+        }
+
+        input::placeholder {
+            color: var(--text-gray);
+            opacity: 0.7;
+        }
+
+        /* --- Styling Tombol Submit --- */
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--btn-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        /* --- Styling Pesan Error --- */
+        .alert-error {
+            background-color: rgba(239, 68, 68, 0.1); /* Merah transparan */
+            border: 1px solid var(--error-red);
+            color: #fca5a5; /* Merah muda terang agar terbaca di dark mode */
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        /* --- Styling Footer Link --- */
+        .footer-text {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+
+        .footer-text a {
+            color: var(--btn-primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer-text a:hover {
+            text-decoration: underline;
+            color: #60a5fa;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <h2>Login</h2>
+
+        <% if(error) { %> 
+            <div class="alert-error">
+                <%= error %>
+            </div> 
+        <% } %>
+
+        <form action="/login" method="post">
+            <input type="email" name="email" placeholder="Email Address" required autocomplete="off">
+            
+            <input type="password" name="password" placeholder="Password" required>
+            
+            <button type="submit">Log In</button>
+        </form>
+
+        <p class="footer-text">
+            No account? <a href="/login/regist">Register here</a>
+        </p>
+    </div>
+
+</body>
+</html>

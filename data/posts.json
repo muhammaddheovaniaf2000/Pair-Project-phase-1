@@ -1,0 +1,14 @@
+[
+  {
+    "posting": "https://dummyimage.com/600x400/333/fff&text=Sunset",
+    "caption": "Senja di pantai indah banget #nature",
+    "like": 100,
+    "UserId": 2
+  },
+  {
+    "posting": "https://dummyimage.com/600x400/555/fff&text=Kopi",
+    "caption": "Ngopi dulu gan #coffee",
+    "like": 15,
+    "UserId": 3
+  }
+]

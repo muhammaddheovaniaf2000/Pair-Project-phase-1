@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Post - InstaKilogram</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CSS Variables (Konsisten) --- */
+        :root {
+            --bg-navy: #0a192f;
+            --card-navy: #112240;
+            --input-bg: #172a45;
+            --text-white: #e6f1ff;
+            --text-gray: #8892b0;
+            --btn-primary: #1d4ed8;
+            --accent-cyan: #64ffda;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-navy);
+            color: var(--text-white);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* --- Card Container --- */
+        .post-card {
+            background-color: var(--card-navy);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px -10px rgba(2, 12, 27, 0.7);
+            width: 100%;
+            max-width: 500px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            color: var(--text-white);
+        }
+
+        /* --- Form Elements --- */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label.label-title {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        input[type="text"], 
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-white);
+            font-family: inherit;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        textarea {
+            resize: vertical; /* Hanya bisa ditarik ke bawah */
+            min-height: 100px;
+        }
+
+        input:focus, 
+        textarea:focus {
+            border-color: var(--btn-primary);
+            box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.2);
+        }
+
+        /* --- Modern Tag Selector (Chips) --- */
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        /* Menyembunyikan Checkbox Asli */
+        .tag-item input[type="checkbox"] {
+            display: none;
+        }
+
+        /* Styling Label sebagai Tombol */
+        .tag-item span {
+            display: inline-block;
+            padding: 6px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background-color: rgba(255, 255, 255, 0.02);
+            user-select: none;
+        }
+
+        .tag-item span:hover {
+            border-color: var(--text-white);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        /* State ketika Checkbox Dipilih (Checked) */
+        .tag-item input[type="checkbox"]:checked + span {
+            background-color: var(--btn-primary);
+            border-color: var(--btn-primary);
+            color: white;
+            box-shadow: 0 4px 10px rgba(29, 78, 216, 0.4);
+        }
+
+        /* --- Action Buttons --- */
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--btn-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            background-color: #2563eb;
+        }
+
+        .cancel-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .cancel-link:hover {
+            color: var(--text-white);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="post-card">
+        <h2>New Post</h2>
+        
+        <form action="/user/<%= userId %>/addPost" method="post">
+            
+            <div class="form-group">
+                <label class="label-title">Image URL</label>
+                <input type="text" name="posting" placeholder="https://example.com/image.jpg" required autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label class="label-title">Caption</label>
+                <textarea name="caption" placeholder="Write something about this photo..." required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="label-title">Select Tags</label>
+                <div class="tags-container">
+                    <% tags.forEach(tag => { %>
+                        <label class="tag-item">
+                            <input type="checkbox" name="tags" value="<%= tag.id %>">
+                            <span>#<%= tag.hastag_name %></span>
+                        </label>
+                    <% }) %>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">Share Post</button>
+        </form>
+
+        <a href="/user/home" class="cancel-link">Cancel</a>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+[
+  {
+    "email": "admin@mail.com",
+    "password": "iniadmin123",
+    "role": "admin"
+  },
+  {
+    "email": "seleb@gram.com",
+    "password": "password123",
+    "role": "user"
+  },
+  {
+    "email": "budi@photo.com",
+    "password": "password123",
+    "role": "user"
+  }
+]
